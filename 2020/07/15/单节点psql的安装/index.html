@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><meta name="keywords" content="null"><meta name="description" content="java,技术分享,后端开发,大数据开发,数据接口,算法,leetcode"><meta name="author" content="removeif"><title>单节点psql的安装 - coolfun</title><meta description="java,技术分享,后端开发,大数据开发,数据接口,算法,leetcode"><meta property="og:type" content="article"><meta property="og:title" content="单节点psql的安装"><meta property="og:url" content="http://yoursite.com/2020/07/15/%E5%8D%95%E8%8A%82%E7%82%B9psql%E7%9A%84%E5%AE%89%E8%A3%85/"><meta property="og:site_name" content="郭靖大虾"><meta property="og:description" content="java,技术分享,后端开发,大数据开发,数据接口,算法,leetcode"><meta property="og:locale" content="en_US"><meta property="article:published_time" content="2020-07-15T03:40:49.203Z"><meta property="article:modified_time" content="2020-06-24T04:15:08.158Z"><meta property="article:author" content="removeif"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="http://yoursite.com/img/avatar.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://yoursite.com/2020/07/15/%E5%8D%95%E8%8A%82%E7%82%B9psql%E7%9A%84%E5%AE%89%E8%A3%85/"},"headline":"单节点psql的安装","image":["http://yoursite.com/img/avatar.jpg"],"datePublished":"2020-07-15T03:40:49.203Z","dateModified":"2020-06-24T04:15:08.158Z","author":{"@type":"Person","name":"removeif"},"description":"java,技术分享,后端开发,大数据开发,数据接口,算法,leetcode"}</script><link rel="alternative" href="/atom.xml" title="coolfun" type="application/atom+xml"><link rel="icon" href="/img/favicon.png"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/5.12.0/css/all.min.css"><link rel="stylesheet" href="https://fonts.loli.net/css?family=Ubuntu:400,600|Source+Code+Pro|Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&amp;amp;subset=latin,latin-ext|Inconsolata|Itim|Lobster.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/lightgallery/1.6.12/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.7.0/css/justifiedGallery.min.css"><!--!--><!--!--><script src="https://cdnjs.loli.net/ajax/libs/pace/1.0.2/pace.min.js"></script><link rel="stylesheet" href="/css/style.css"><script src="https://cdnjs.loli.net/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script src="/js/globalUtils.js"></script></head><body class="is-2-column has-navbar-fixed-top"><nav class="navbar navbar-main is-fixed-top"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="coolfun" height="28"></a></div><div class="navbar-menu" style="overflow-x:visible"><div class="navbar-start"><a class="navbar-item" href="/">首页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><div class="navbar-item has-dropdown is-hoverable"><a class="navbar-link" href="/documentation/overview/start/">生活</a><div class="navbar-dropdown is-boxed"><a class="navbar-item" href="/reading-notes">读书笔记</a><a class="navbar-item" href="/finance">理财</a><a class="navbar-item" href="/travel">游记</a><a class="navbar-item" href="/album">相册</a><a class="navbar-item" href="/self-talking">碎碎念</a><a class="navbar-item" href="/media">影音</a></div></div><a class="navbar-item" href="/friend">友链</a><a class="navbar-item" href="/message">留言</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/removeif"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a><a class="navbar-item" id="night-nav" title="Night Mode" href="javascript:;"><i class="fas fa-moon" id="night-icon"></i></a></div></div></div></nav><script type="text/javascript" src="/js/theme-setting.js"></script><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen is-8-tablet is-8-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><i class="far fa-calendar-plus"> </i>2020-07-15  <a class="commentCountImg" href="/2020/07/15/%E5%8D%95%E8%8A%82%E7%82%B9psql%E7%9A%84%E5%AE%89%E8%A3%85/#comment-container"><span class="display-none-class">6be009ff56519326bb676bf73a417164</span><i class="far fa-comment-dots"></i> <span class="commentCount" id="6be009ff56519326bb676bf73a417164">99+</span>  </a><span class="level-item"><i class="far fa-clock"> </i>5 m  <i class="fas fa-pencil-alt"> </i>0.8 k</span><span class="level-item" id="busuanzi_container_page_pv"><i class="far fa-eye"></i>&nbsp;&nbsp;<span id="busuanzi_value_page_pv">0</span> visits</span></div></div><h1 class="title is-3 is-size-4-mobile">单节点psql的安装</h1><div class="content"><p>1.1 初识 <code>PostgreSQL</code></p>
+<p> <code>PostgreSQL</code>是由<code>PostgreSQL</code>社区全球志愿者开发团队开发的开源对象-关系型数据 库。它源于<code>UC Berkeley</code>大学1977年的Ingres计划，这个项目是由著名的数据库科学家 <code>Michael Stonebraker</code> （2015年图灵奖获得者）领导的。在1994年，两个<code>UC Berkeley</code>大学 的研究生Andrew Yu和Jolly Chen增加了一个SQL语言解释器来替代早先的基于Ingres 的QUEL系统，建立了 Postgres95o为了反映数据库的新SQL査询语言特性，Postgres95 在1996年重命名为PostgreSQL,并第一次发行了以PostgreSQL命名的6.0版本，在 2005年，PostgreSQL发行了以原生方式运行在Windows系统下的8.0版本。随着2010年 <code>PostgreSQL 9.0</code>的发行，<code>PostgreSQL</code>进入了黄金发展阶段，目前，<code>PostgreSQL</code>最新的稳定 版是 <code>PostgreSQL 12</code> PostgreSQL是目前可免费获得的最高级的开源数据库。它非常稳定可靠，有很多前沿 的技术特性，并且性能卓越，在数据完整性和正确性方面赢得了良好的声誉。目前主流的 云服务提供商如亚马逊云、微软云、腾讯云、阿里云、百度云都提供了 <code>PostgreSQL</code>的RDS 服务。</p>
+<p><code>PostgreSQL</code>号称是全世界最先进的开源关系型数据库，在支持的功能特性比<code>Mysql</code>要多，功能强大，且有不少先进的概念。但在互联网上，<code>Mysql</code>的使用的广泛度远超于<code>PostgreSQL</code>。</p>
+<h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h3><p><code>Postgresql</code>的部署方式有两种：一是源码编译安装；二是<code>yum</code>安装；此处的部署方式为<code>yum</code></p>
+<p>在官网点击<code>Downloads</code>进入下载页面，选择相应的安装系统，本文的部署系统是<code>Centos</code>，进入地址<code>https://www.postgresql.org/download/linux/redhat/</code>，选择相应的<code>Postgresql</code>的安装版本以及系统版本，如下图：</p>
+<p><img src="images/image-20200515164553918.png" alt="image-20200515164553918"></p>
+<p>选择好版本后，从第4步开始，执行完全部命令即可：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">yum install https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm</span><br><span class="line"><span class="meta">#</span><span class="bash"> 安装客户端</span></span><br><span class="line">yum install postgresql12</span><br><span class="line"><span class="meta">#</span><span class="bash"> 安装服务器</span></span><br><span class="line">yum install postgresql12-server</span><br><span class="line"><span class="meta">#</span><span class="bash"> 数据库初始化</span></span><br><span class="line">/usr/pgsql-12/bin/postgresql-12-setup initdb</span><br><span class="line"><span class="meta">#</span><span class="bash"> </span></span><br><span class="line">systemctl enable postgresql-12</span><br><span class="line">systemctl start postgresql-12</span><br></pre></td></tr></table></figure>
+
+<h4 id="包含在各个发行版本系统的pgsql"><a href="#包含在各个发行版本系统的pgsql" class="headerlink" title="包含在各个发行版本系统的pgsql"></a>包含在各个发行版本系统的<code>pgsql</code></h4><p>在<code>RHEL 6</code> 和 <code>7</code>中，包含了<code>postgresql-server</code>，可以执行 <code>yum install postgresql-server</code>命令安装，下面是各个发行版本所对应的<code>pgsql</code>的版本：</p>
+<p><img src="images/image-20200515165824319.png" alt="image-20200515165824319"></p>
+<p>在安装完成后，也需要进行初始化操作：</p>
+<ul>
+<li>对于<code>RHEL / CentOS / SL / OL 6</code>：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service postgresql initdb</span><br><span class="line">chkconfig postgresql on</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>对于 <code>RHEL / CentOS / SL / OL 7, 8 Or Fedora 29</code>以及更新的版本：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">postgresql-setup initdb</span><br><span class="line">systemctl enable postgresql.service</span><br><span class="line">systemctl start postgresql.service</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="部署路径介绍"><a href="#部署路径介绍" class="headerlink" title="部署路径介绍"></a>部署路径介绍</h3><p>数据目录在 <code>/var/lib/pgsql/12/</code></p>
+<p><code>yum</code>方式安装完后，会自动创建名为<code>postgres</code>的用户和用户组以及<code>postgres</code>数据库。</p>
+<p>安装目录在：<code>/usr/pgsql-10/bin</code></p>
+<p>为了能够直接使用<code>pg_ctl</code>等命令，<code>vim ~/.bash_profile</code>增加下面的内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">PGPATH&#x3D;&#x2F;usr&#x2F;pgsql-10&#x2F;bin</span><br><span class="line">export PGPATH</span><br><span class="line">PATH&#x3D;$PATH:$PGPATH</span><br><span class="line">export PATH</span><br></pre></td></tr></table></figure>
+
+<p>使更改生效</p>
+<p><code>source ~/.bash_profile</code></p>
+</div><ul class="post-copyright"><li><strong>Post Title: </strong><a href="http://yoursite.com/2020/07/15/单节点psql的安装/">单节点psql的安装</a></li><li><strong>Post Author: </strong><a href="http://yoursite.com">郭靖大虾</a></li><li><strong>Post Link: </strong><a href="http://yoursite.com/2020/07/15/单节点psql的安装/">http://yoursite.com/2020/07/15/单节点psql的安装/</a></li><li><strong>Copyright Notice: </strong><span>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> unless stating additionally.</span></li></ul><div><div class="recommend-post"><span class="is-size-6 has-text-grey has-mr-7"># Related Post</span><br><span>  1.<a class="is-size-6" href="/2020/07/10/hhh/" target="_blank">hhh</a><br></span></div></div><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/social-share.js/1.0.16/css/share.min.css"><div class="social-share"></div><script src="https://cdnjs.loli.net/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">Like this article? Support the author with</h3><div class="buttons is-centered"><a class="button is-info donate"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>Alipay</span><span class="qrcode"><img src="/img/alipay.jpg" alt="Alipay"></span></a><a class="button is-success donate"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>Wechat</span><span class="qrcode"><img src="/img/wechatpay.jpg" alt="Wechat"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2020/07/10/my-java/"><span class="level-item">my_java</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><div class="title is-5">Comments</div><div id="comment-container"></div><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/gitalk/1.6.0/gitalk.css"><script> $.getScript('/js/gitalk.min.js', function () { 
+            var gitalk = new Gitalk({
+            language:'zh-CN',
+            id: '6be009ff56519326bb676bf73a417164',
+            repo: 'blog_comment',
+            owner: 'jingcoder',
+            clientID: '2366925f3d42917ba0cd',
+            clientSecret: 'a4d8e25a6fcc66487967caa34c48a0763a4a7bea',
+            admin: ["jingcoder"],
+            createIssueManually: true,
+            distractionFreeMode: false,
+            perPage: 10,
+            pagerDirection: 'last',
+            
+            
+            enableHotKey: true,
+            isLocked: false
+        })
+        gitalk.render('comment-container')});</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><!--!--><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile is-marginless" href="/categories/Java%E5%9F%BA%E7%A1%80/"><span class="level-start"><span class="level-item">Java基础</span></span><span class="level-end"><span class="level-item tag">1</span></span></a><ul class="mr-0"><li><a class="level is-mobile is-marginless" href="/categories/Java%E5%9F%BA%E7%A1%80/Mysql/"><span class="level-start"><span class="level-item">Mysql</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></li><li><a class="level is-mobile is-marginless" href="/categories/dd/"><span class="level-start"><span class="level-item">dd</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E5%90%8E%E7%AB%AF/"><span class="level-start"><span class="level-item">后端</span></span><span class="level-end"><span class="level-item tag">2</span></span></a><ul class="mr-0"><li><a class="level is-mobile is-marginless" href="/categories/%E5%90%8E%E7%AB%AF/Java/"><span class="level-start"><span class="level-item">Java</span></span><span class="level-end"><span class="level-item tag">1</span></span></a><ul class="mr-0"><li><a class="level is-mobile is-marginless" href="/categories/%E5%90%8E%E7%AB%AF/Java/bbb/"><span class="level-start"><span class="level-item">bbb</span></span><span class="level-end"><span class="level-item tag">1</span></span></a><ul class="mr-0"><li><a class="level is-mobile is-marginless" href="/categories/%E5%90%8E%E7%AB%AF/Java/bbb/ccc/"><span class="level-start"><span class="level-item">ccc</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></li></ul></li><li><a class="level is-mobile is-marginless" href="/categories/%E5%90%8E%E7%AB%AF/Mysql/"><span class="level-start"><span class="level-item">Mysql</span></span><span class="level-end"><span class="level-item tag">1</span></span></a><ul class="mr-0"><li><a class="level is-mobile is-marginless" href="/categories/%E5%90%8E%E7%AB%AF/Mysql/bbb/"><span class="level-start"><span class="level-item">bbb</span></span><span class="level-end"><span class="level-item tag">1</span></span></a><ul class="mr-0"><li><a class="level is-mobile is-marginless" href="/categories/%E5%90%8E%E7%AB%AF/Mysql/bbb/ccc/"><span class="level-start"><span class="level-item">ccc</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></li></ul></li></ul></li><a class="level is-mobile is-marginless" href="/categories/"><span class="level-start"><span class="level-item">查看全部&gt;&gt;</span></span></a></ul></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Java/"><span class="tag">Java</span><span class="tag is-grey-lightest">1</span></a></div></div></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">Subscribe to Updates</h3><form action="https://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open(&#039;https://feedburner.google.com/fb/a/mailverify?uri=removeifFeedsId&#039;,&#039;popupwindow&#039;,&#039;scrollbars=yes,width=550,height=520&#039;);return true"><input type="hidden" value="removeifFeedsId" name="uri"><input type="hidden" name="loc" value="en_US"><div class="field has-addons"><div class="control has-icons-left is-expanded"><input class="input" name="email" type="email" placeholder="Email"><span class="icon is-small is-left"><i class="fas fa-envelope"></i></span></div><div class="control"><input class="button is-primary" type="submit" value="Subscribe"></div></div><p class="help">输入邮箱开始订阅，更博后邮件通知！</p></form></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.png" alt="coolfun" height="28"></a><p class="size-small"><span>© 版权说明：[本网站所有内容均收集于互联网或自己创作,<br />&nbsp;&nbsp;&nbsp;&nbsp;方便于网友与自己学习交流，如有侵权，请<a href="/message" target="_blank">留言</a>，立即处理]<br /></span><span><span id="statistic-times">loading...</span><script>function createTime(time) {
+            var n = new Date(time);
+            now.setTime(now.getTime() + 250),
+                days = (now - n) / 1e3 / 60 / 60 / 24,
+                dnum = Math.floor(days),
+                hours = (now - n) / 1e3 / 60 / 60 - 24 * dnum,
+                hnum = Math.floor(hours),
+            1 == String(hnum).length && (hnum = "0" + hnum),
+                minutes = (now - n) / 1e3 / 60 - 1440 * dnum - 60 * hnum,
+                mnum = Math.floor(minutes),
+            1 == String(mnum).length && (mnum = "0" + mnum),
+                seconds = (now - n) / 1e3 - 86400 * dnum - 3600 * hnum - 60 * mnum,
+                snum = Math.round(seconds),
+            1 == String(snum).length && (snum = "0" + snum),
+                document.getElementById("statistic-times").innerHTML = "❤️Site from <strong>"+time.split(" ")[0].replace(/\//g,".")+"</strong> has existed <strong>" + dnum + "</strong> d <strong>" + hnum + "</strong> h <strong>" + mnum + "</strong> m <strong>" + snum + "</strong> s！❤️";
+        }var now = new Date();setInterval("createTime('2020/06/01 00:00:00')", 250,"");</script><br></span><div class="size-small"><span>❤️Thx <strong><span id="busuanzi_value_site_uv">99+</span></strong> users <strong><span id="busuanzi_value_site_pv">99+</span></strong> visited！❤️</span></div></p></div></div></div></footer><script src="https://cdnjs.loli.net/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            site: {
+                url: 'http://yoursite.com',
+                external_link: {"enable":true,"exclude":[]}
+            },
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="https://cdnjs.loli.net/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" defer></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to Top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back-to-top.js" defer></script><!--!--><!--!--><script src="https://cdnjs.loli.net/ajax/libs/lightgallery/1.6.12/js/lightgallery-all.min.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.7.0/js/jquery.justifiedGallery.min.js" defer></script><!--!--><!--!--><!--!--><script src="/js/toc.js" defer></script><script src="/js/main.js" defer></script><script>$.getScript('/js/comment-issue-data.js',function(){loadIssueData('2366925f3d42917ba0cd','a4d8e25a6fcc66487967caa34c48a0763a4a7bea','jingcoder','blog_comment',false);})</script><link rel="stylesheet" href="/css/insight.css"><div class="searchbox ins-search"><div class="searchbox-container ins-search-container"><div class="searchbox-input-wrapper"><input class="searchbox-input ins-search-input" type="text" placeholder="Type something..."><span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span></div><div class="searchbox-result-wrapper ins-section-wrapper"><div class="ins-section-container"></div></div></div></div><script>(function (window) {
+            var INSIGHT_CONFIG = {
+                TRANSLATION: {
+                    POSTS: 'Posts',
+                    PAGES: 'Pages',
+                    CATEGORIES: 'Categories',
+                    TAGS: 'Tags',
+                    UNTITLED: '(Untitled)',
+                },
+                CONTENT_URL: '/content.json',
+            };
+            window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+        })(window);</script><script src="/js/insight.js" defer></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.js"></script><script type="text/javascript">var pjax = new Pjax({
+            elements: "a",//代表点击链接就更新
+            selectors: [  //代表要更新的节点
+                ".section",
+                "title"
+            ],
+            cache: true,
+            cacheBust:false
+        })
+
+        function loadBusuanzi(){
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js", function () {});
+        }
+
+        // 开始 PJAX 执行的函数
+        document.addEventListener('pjax:send', function () {
+        });
+        
+        // PJAX 完成之后执行的函数，可以和上面的重载放在一起
+        document.addEventListener('pjax:complete', function () {
+            $(".section").css({opacity:1});
+            if(true){
+                $.getScript('/js/comment-issue-data.js',function(){loadIssueData('2366925f3d42917ba0cd','a4d8e25a6fcc66487967caa34c48a0763a4a7bea','jingcoder','blog_comment',false);});
+            }
+            if(false){
+                loadMathJax();
+            }
+            loadMainJs(jQuery, window.moment, window.ClipboardJS, window.IcarusThemeSettings);
+            loadBackTop();
+            loadBusuanzi();
+            if(typeof loadBanner == 'function'){
+                loadBanner();
+            }
+        });</script></body></html>
